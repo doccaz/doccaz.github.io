@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browser-based tools and experiments by Erico Mendonça (@doccaz), Solution Architect at SUSE." />
+  <title>doccaz — Open Source Tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400;500;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:           #070c14;
+      --surface:      #0d1524;
+      --surface-2:    #121e32;
+      --border:       #19273d;
+      --border-glow:  rgba(34,211,165,0.5);
+      --accent:       #22d3a5;
+      --accent-dim:   rgba(34,211,165,0.08);
+      --accent-glow:  rgba(34,211,165,0.15);
+      --amber:        #f59e0b;
+      --amber-dim:    rgba(245,158,11,0.08);
+      --blue:         #60a5fa;
+      --blue-dim:     rgba(96,165,250,0.08);
+      --text:         #dce8f5;
+      --text-muted:   #5e7a96;
+      --text-sub:     #3d5470;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      /* dot grid */
+      background-image: radial-gradient(rgba(34,211,165,0.035) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
+
+    /* ── AMBIENT ORBS ─────────────────────────────── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 { width:500px; height:500px; background:rgba(34,211,165,0.04); top:-160px; left:-160px; }
+    .orb-2 { width:350px; height:350px; background:rgba(245,158,11,0.035); bottom:60px; right:-80px; }
+    .orb-3 { width:280px; height:280px; background:rgba(96,165,250,0.03); top:40%; left:55%; }
+
+    /* ── LAYOUT ───────────────────────────────────── */
+    main { position: relative; z-index: 1; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .hero {
+      padding: 96px 24px 72px;
+      max-width: 1100px;
+      margin: 0 auto;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-eyebrow::before { content: '//'; opacity: 0.4; }
+
+    .hero h1 {
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 22px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 36px;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 5px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .badge.live {
+      border-color: rgba(34,211,165,0.4);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .badge.live span {
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: blink 2.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* ── SECTION DIVIDER ──────────────────────────── */
+    .section-head {
+      max-width: 1100px;
+      margin: 0 auto 28px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-label {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+    .section-line {
+      height: 1px;
+      background: var(--border);
+      flex: 1;
+    }
+    .section-count {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 10px;
+      color: var(--text-sub);
+    }
+
+    /* ── CARD GRID ────────────────────────────────── */
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 18px;
+    }
+
+    /* ── CARD ─────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    /* stagger */
+    .card:nth-child(1) { animation-delay: 0.10s; }
+    .card:nth-child(2) { animation-delay: 0.18s; }
+    .card:nth-child(3) { animation-delay: 0.26s; }
+    .card:nth-child(4) { animation-delay: 0.34s; }
+    .card:nth-child(5) { animation-delay: 0.42s; }
+
+    /* top-left corner glow on hover */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--accent-dim) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      border-color: rgba(34,211,165,0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(34,211,165,0.1), 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .card:hover::after { opacity: 1; }
+
+    /* corner bracket decoration */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 28px; height: 28px;
+      border-top: 2px solid var(--accent);
+      border-left: 2px solid var(--accent);
+      border-radius: 12px 0 0 0;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.1));
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .tag {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+    .tag-green { background:var(--accent-dim); color:var(--accent); border:1px solid rgba(34,211,165,0.18); }
+    .tag-amber { background:var(--amber-dim); color:var(--amber); border:1px solid rgba(245,158,11,0.18); }
+    .tag-blue  { background:var(--blue-dim);  color:var(--blue);  border:1px solid rgba(96,165,250,0.18); }
+
+    .card-name {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-desc {
+      font-size: 0.845rem;
+      color: var(--text-muted);
+      line-height: 1.68;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+    .card-cta {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 11.5px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: gap 0.2s;
+    }
+    .card:hover .card-cta { gap: 9px; }
+    .card-stack {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 10px;
+      color: var(--text-sub);
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 11px;
+      color: var(--text-sub);
+      letter-spacing: 0.06em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-inner a { color: var(--accent); text-decoration: none; }
+    .footer-inner a:hover { text-decoration: underline; }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ── ANIMATIONS ───────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { padding: 64px 20px 52px; }
+      .grid { grid-template-columns: 1fr; padding: 0 20px; }
+      .section-head { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ambient glow -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <div class="hero">
+      <p class="hero-eyebrow">doccaz / open source tools</p>
+      <h1>Web Tools &amp;<br /><em>Experiments</em></h1>
+      <p class="hero-sub">
+        A collection of browser-based utilities for infrastructure engineers,
+        container security, and embedded hardware developers.
+        No install required — open and use.
+      </p>
+      <div class="hero-badges">
+        <span class="badge live"><span></span>5 tools live</span>
+        <span class="badge">@SUSE</span>
+        <span class="badge">github.com/doccaz</span>
+      </div>
+    </div>
+
+    <!-- ── SECTION: Infrastructure & Security ── -->
+    <div class="section-head">
+      <span class="section-label">Infrastructure &amp; Security</span>
+      <div class="section-line"></div>
+      <span class="section-count">04</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="https://doccaz.github.io/cloud-init" target="_blank" rel="noopener noreferrer">
+        <div class="card-header">
+          <div class="card-icon">☁️</div>
+          <div class="card-tags">
+            <span class="tag tag-green">cloud-init</span>
+            <span class="tag tag-blue">TypeScript</span>
+          </div>
+        </div>
+        <div class="card-name">Cloud-Init Generator</div>
+        <div class="card-desc">
+          Visually compose and validate cloud-init configuration files.
+          Real-time YAML output, schema validation, and format checking
+          in a single browser tab.
+        </div>
+        <div class="card-footer">
+          <span class="card-cta">Open tool <span>→</span></span>
+          <span class="card-stack">React · Vite</span>
+        </div>
+      </a>
+
+      <a class="card" href="https://doccaz.github.io/harvester-cloud-init" target="_blank" rel="noopener noreferrer">
+        <div class="card-header">
+          <div class="card-icon">🌾</div>
+          <div class="card-tags">
+            <span class="tag tag-green">harvester</span>
+            <span class="tag tag-blue">TypeScript</span>
+          </div>
+        </div>
+        <div class="card-name">Harvester CloudInit Editor</div>
+        <div class="card-desc">
+          Visual editor for Harvester &amp; Elemental CloudInit CRDs with
+          live YAML preview. Includes an AI-assisted composition mode
+          (requires a Gemini API key).
+        </div>
+        <div class="card-footer">
+          <span class="card-cta">Open tool <span>→</span></span>
+          <span class="card-stack">React · Vite</span>
+        </div>
+      </a>
+
+      <a class="card" href="https://doccaz.github.io/harvester-configurator" target="_blank" rel="noopener noreferrer">
+        <div class="card-header">
+          <div class="card-icon">⚙️</div>
+          <div class="card-tags">
+            <span class="tag tag-green">harvester</span>
+            <span class="tag tag-blue">TypeScript</span>
+          </div>
+        </div>
+        <div class="card-name">Harvester Configurator</div>
+        <div class="card-desc">
+          Guided wizard for generating Harvester v1.7+ automated install
+          YAML configs. Covers bonding modes, VLANs, multipath, NTP,
+          SSH keys, and storage configuration.
+        </div>
+        <div class="card-footer">
+          <span class="card-cta">Open tool <span>→</span></span>
+          <span class="card-stack">React · Vite</span>
+        </div>
+      </a>
+
+      <a class="card" href="https://doccaz.github.io/neuvector-visualizer" target="_blank" rel="noopener noreferrer">
+        <div class="card-header">
+          <div class="card-icon">🛡️</div>
+          <div class="card-tags">
+            <span class="tag tag-amber">security</span>
+            <span class="tag tag-blue">HTML5</span>
+          </div>
+        </div>
+        <div class="card-name">NeuVector Visualizer</div>
+        <div class="card-desc">
+          Interactive educational animation demonstrating NeuVector's
+          Deep Packet Inspection and Zero Trust container security model.
+          Built for demos and training.
+        </div>
+        <div class="card-footer">
+          <span class="card-cta">Open tool <span>→</span></span>
+          <span class="card-stack">HTML · Canvas</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- ── SECTION: Maker & Hobby ── -->
+    <div class="section-head">
+      <span class="section-label">Maker &amp; Hobby</span>
+      <div class="section-line"></div>
+      <span class="section-count">01</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="https://doccaz.github.io/pixel-matrix-studio" target="_blank" rel="noopener noreferrer">
+        <div class="card-header">
+          <div class="card-icon">🟦</div>
+          <div class="card-tags">
+            <span class="tag tag-amber">embedded</span>
+            <span class="tag tag-blue">TypeScript</span>
+          </div>
+        </div>
+        <div class="card-name">LCD Matrix Studio</div>
+        <div class="card-desc">
+          Professional bitmap editor for monochrome LCD/OLED displays —
+          SSD1306, SH1106, Nokia 5110 and more. Exports C-style
+          <code style="font-family:'Azeret Mono',monospace;font-size:0.8em;color:var(--accent)">PROGMEM</code>
+          arrays with native Vertical Page addressing. Supports two-way
+          code ↔ canvas editing.
+        </div>
+        <div class="card-footer">
+          <span class="card-cta">Open tool <span>→</span></span>
+          <span class="card-stack">React 19 · Vite</span>
+        </div>
+      </a>
+
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/doccaz" target="_blank" rel="noopener">github.com/doccaz</a>
+        <a href="https://www.linkedin.com/in/ericomm/" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://ko-fi.com/doccaz" target="_blank" rel="noopener">ko-fi</a>
+      </div>
+      <span>Erico Mendonça · Solution Architect @ SUSE</span>
+    </div>
+  </footer>
+
+</body>
+</html>
