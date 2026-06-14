@@ -3,33 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Browser-based tools and experiments by Erico Mendonça (@doccaz), Solution Architect at SUSE." />
-  <title>doccaz — Open Source Tools</title>
+  <meta name="description" content="Projects and tools by Erico Mendonça (@doccaz), Solution Architect at SUSE." />
+  <title>doccaz — Projects & Tools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400;500;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-
   <style>
-    /* ── RESET & BASE ─────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     :root {
-      --bg:           #070c14;
-      --surface:      #0d1524;
-      --surface-2:    #121e32;
-      --border:       #19273d;
-      --border-glow:  rgba(34,211,165,0.5);
-      --accent:       #22d3a5;
-      --accent-dim:   rgba(34,211,165,0.08);
-      --accent-glow:  rgba(34,211,165,0.15);
-      --amber:        #f59e0b;
-      --amber-dim:    rgba(245,158,11,0.08);
-      --blue:         #60a5fa;
-      --blue-dim:     rgba(96,165,250,0.08);
-      --text:         #dce8f5;
-      --text-muted:   #5e7a96;
-      --text-sub:     #3d5470;
+      --bg:          #070c14;
+      --surface:     #0d1524;
+      --border:      #19273d;
+      --accent:      #22d3a5;
+      --accent-dim:  rgba(34,211,165,0.08);
+      --amber:       #f59e0b;
+      --amber-dim:   rgba(245,158,11,0.08);
+      --blue:        #60a5fa;
+      --blue-dim:    rgba(96,165,250,0.08);
+      --violet:      #a78bfa;
+      --violet-dim:  rgba(167,139,250,0.08);
+      --rose:        #fb7185;
+      --rose-dim:    rgba(251,113,133,0.08);
+      --text:        #dce8f5;
+      --muted:       #5e7a96;
+      --sub:         #3d5470;
     }
 
     body {
@@ -38,473 +37,421 @@
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      /* dot grid */
-      background-image: radial-gradient(rgba(34,211,165,0.035) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(34,211,165,0.03) 1px, transparent 1px);
       background-size: 26px 26px;
     }
 
-    /* ── AMBIENT ORBS ─────────────────────────────── */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb-1 { width:500px; height:500px; background:rgba(34,211,165,0.04); top:-160px; left:-160px; }
-    .orb-2 { width:350px; height:350px; background:rgba(245,158,11,0.035); bottom:60px; right:-80px; }
-    .orb-3 { width:280px; height:280px; background:rgba(96,165,250,0.03); top:40%; left:55%; }
+    .orb { position:fixed; border-radius:50%; filter:blur(100px); pointer-events:none; z-index:0; }
+    .orb-1 { width:500px;height:500px;background:rgba(34,211,165,0.04);top:-160px;left:-160px; }
+    .orb-2 { width:350px;height:350px;background:rgba(245,158,11,0.03);bottom:60px;right:-80px; }
+    .orb-3 { width:280px;height:280px;background:rgba(96,165,250,0.03);top:40%;left:55%; }
 
-    /* ── LAYOUT ───────────────────────────────────── */
-    main { position: relative; z-index: 1; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    main { position:relative; z-index:1; }
 
-    /* ── HERO ─────────────────────────────────────── */
-    .hero {
-      padding: 96px 24px 72px;
-      max-width: 1100px;
-      margin: 0 auto;
-      animation: fadeUp 0.7s ease both;
-    }
+    /* ── HERO ── */
+    .hero { padding:88px 24px 56px; max-width:1100px; margin:0 auto; animation:fadeUp 0.6s ease both; }
+    .eyebrow { font-family:'Azeret Mono',monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; }
+    .eyebrow::before { content:'// '; opacity:.4; }
+    .hero h1 { font-family:'Azeret Mono',monospace; font-size:clamp(2.2rem,5.5vw,3.6rem); font-weight:700; line-height:1.08; margin-bottom:18px; }
+    .hero h1 em { font-style:normal; color:var(--accent); }
+    .hero-sub { font-size:1rem; color:var(--muted); max-width:460px; line-height:1.72; font-weight:300; margin-bottom:32px; }
+    .hero-badges { display:flex; gap:8px; flex-wrap:wrap; }
+    .badge { font-family:'Azeret Mono',monospace; font-size:11px; letter-spacing:.08em; padding:4px 11px; border-radius:4px; border:1px solid var(--border); color:var(--muted); }
+    .badge.live { border-color:rgba(34,211,165,.4); color:var(--accent); background:var(--accent-dim); }
+    .badge.live span { display:inline-block; width:6px; height:6px; background:var(--accent); border-radius:50%; margin-right:5px; animation:blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.15} }
 
-    .hero-eyebrow {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .hero-eyebrow::before { content: '//'; opacity: 0.4; }
+    /* ── FILTER BAR ── */
+    .filter-wrap { max-width:1100px; margin:0 auto 36px; padding:0 24px; }
+    .filter-bar { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+    .filter-label { font-family:'Azeret Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--sub); margin-right:4px; white-space:nowrap; }
+    .f-btn { font-family:'Azeret Mono',monospace; font-size:11px; letter-spacing:.05em; padding:5px 13px; border-radius:20px; border:1px solid var(--border); color:var(--muted); background:transparent; cursor:pointer; transition:all .18s; white-space:nowrap; }
+    .f-btn:hover { border-color:rgba(34,211,165,.35); color:var(--accent); }
+    .f-btn.active { background:var(--accent-dim); border-color:rgba(34,211,165,.5); color:var(--accent); }
+    .result-count { font-family:'Azeret Mono',monospace; font-size:11px; color:var(--sub); letter-spacing:.08em; margin-left:auto; }
 
-    .hero h1 {
-      font-family: 'Azeret Mono', monospace;
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 700;
-      line-height: 1.08;
-      color: var(--text);
-      margin-bottom: 22px;
-    }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
+    /* ── GRID ── */
+    .grid { max-width:1100px; margin:0 auto 80px; padding:0 24px; display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:16px; }
 
-    .hero-sub {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 480px;
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 36px;
-    }
+    /* ── CARD ── */
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:26px 24px; display:flex; flex-direction:column; gap:12px; text-decoration:none; color:inherit; position:relative; overflow:hidden; transition:border-color .22s, transform .22s, box-shadow .22s; opacity:0; animation:fadeUp .45s ease forwards; }
+    .card.hidden { display:none !important; }
+    .card::after { content:''; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(135deg,rgba(34,211,165,.06) 0%,transparent 55%); opacity:0; transition:opacity .28s; }
+    .card:hover { border-color:rgba(34,211,165,.4); transform:translateY(-3px); box-shadow:0 10px 30px rgba(34,211,165,.09),0 2px 8px rgba(0,0,0,.4); }
+    .card:hover::after { opacity:1; }
+    .card::before { content:''; position:absolute; top:0; left:0; width:24px; height:24px; border-top:2px solid var(--accent); border-left:2px solid var(--accent); border-radius:11px 0 0 0; opacity:0; transition:opacity .22s; }
+    .card:hover::before { opacity:1; }
+    .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.10s}
+    .card:nth-child(3){animation-delay:.14s}.card:nth-child(4){animation-delay:.18s}
+    .card:nth-child(5){animation-delay:.22s}.card:nth-child(6){animation-delay:.26s}
+    .card:nth-child(7){animation-delay:.30s}.card:nth-child(8){animation-delay:.34s}
+    .card:nth-child(9){animation-delay:.37s}.card:nth-child(10){animation-delay:.40s}
+    .card:nth-child(n+11){animation-delay:.43s}
 
-    .hero-badges {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .badge {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      padding: 5px 12px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-    .badge.live {
-      border-color: rgba(34,211,165,0.4);
-      color: var(--accent);
-      background: var(--accent-dim);
-    }
-    .badge.live span {
-      display: inline-block;
-      width: 7px; height: 7px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin-right: 6px;
-      animation: blink 2.2s ease-in-out infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .card-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; position:relative; z-index:1; }
+    .card-icon { font-size:1.45rem; line-height:1; flex-shrink:0; }
+    .card-badges { display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
+    .type-pill { font-family:'Azeret Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; padding:2px 7px; border-radius:10px; }
+    .type-web  { background:rgba(34,211,165,.12); color:var(--accent); border:1px solid rgba(34,211,165,.25); }
+    .type-repo { background:rgba(96,165,250,.1); color:var(--blue); border:1px solid rgba(96,165,250,.2); }
+    .chip { font-family:'Azeret Mono',monospace; font-size:9px; letter-spacing:.07em; text-transform:uppercase; padding:2px 7px; border-radius:3px; }
+    .chip-green  { background:var(--accent-dim); color:var(--accent); border:1px solid rgba(34,211,165,.18); }
+    .chip-amber  { background:var(--amber-dim);  color:var(--amber);  border:1px solid rgba(245,158,11,.18); }
+    .chip-blue   { background:var(--blue-dim);   color:var(--blue);   border:1px solid rgba(96,165,250,.18); }
+    .chip-violet { background:var(--violet-dim); color:var(--violet); border:1px solid rgba(167,139,250,.18); }
+    .chip-rose   { background:var(--rose-dim);   color:var(--rose);   border:1px solid rgba(251,113,133,.18); }
 
-    /* ── SECTION DIVIDER ──────────────────────────── */
-    .section-head {
-      max-width: 1100px;
-      margin: 0 auto 28px;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .section-label {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-sub);
-      white-space: nowrap;
-    }
-    .section-line {
-      height: 1px;
-      background: var(--border);
-      flex: 1;
-    }
-    .section-count {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 10px;
-      color: var(--text-sub);
-    }
+    .card-name { font-family:'Azeret Mono',monospace; font-size:.95rem; font-weight:700; color:var(--text); line-height:1.3; position:relative; z-index:1; }
+    .card-desc { font-size:.83rem; color:var(--muted); line-height:1.68; flex:1; position:relative; z-index:1; }
+    .card-desc code { font-family:'Azeret Mono',monospace; font-size:.78em; color:var(--accent); }
+    .card-footer { display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border); position:relative; z-index:1; }
+    .card-cta { font-family:'Azeret Mono',monospace; font-size:11px; color:var(--accent); display:flex; align-items:center; gap:5px; transition:gap .18s; }
+    .card:hover .card-cta { gap:9px; }
+    .card-cta.repo { color:var(--blue); }
+    .card-stack { font-family:'Azeret Mono',monospace; font-size:9.5px; color:var(--sub); }
 
-    /* ── CARD GRID ────────────────────────────────── */
-    .grid {
-      max-width: 1100px;
-      margin: 0 auto 60px;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 18px;
-    }
+    /* ── EMPTY STATE ── */
+    .empty { display:none; max-width:1100px; margin:0 auto 80px; padding:0 24px; }
+    .empty.show { display:flex; align-items:center; justify-content:center; min-height:140px; }
+    .empty p { font-family:'Azeret Mono',monospace; font-size:12px; color:var(--sub); letter-spacing:.1em; }
 
-    /* ── CARD ─────────────────────────────────────── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-      opacity: 0;
-      animation: fadeUp 0.5s ease forwards;
-    }
-    /* stagger */
-    .card:nth-child(1) { animation-delay: 0.10s; }
-    .card:nth-child(2) { animation-delay: 0.18s; }
-    .card:nth-child(3) { animation-delay: 0.26s; }
-    .card:nth-child(4) { animation-delay: 0.34s; }
-    .card:nth-child(5) { animation-delay: 0.42s; }
+    /* ── FOOTER ── */
+    footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:32px 24px; text-align:center; }
+    .footer-inner { font-family:'Azeret Mono',monospace; font-size:11px; color:var(--sub); letter-spacing:.06em; display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .footer-inner a { color:var(--accent); text-decoration:none; }
+    .footer-inner a:hover { text-decoration:underline; }
+    .footer-links { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
 
-    /* top-left corner glow on hover */
-    .card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(135deg, var(--accent-dim) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .card:hover {
-      border-color: rgba(34,211,165,0.45);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(34,211,165,0.1), 0 2px 8px rgba(0,0,0,0.4);
-    }
-    .card:hover::after { opacity: 1; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 
-    /* corner bracket decoration */
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 28px; height: 28px;
-      border-top: 2px solid var(--accent);
-      border-left: 2px solid var(--accent);
-      border-radius: 12px 0 0 0;
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-    .card:hover::before { opacity: 1; }
-
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-icon {
-      font-size: 1.5rem;
-      line-height: 1;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.1));
-    }
-
-    .card-tags {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .tag {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 9.5px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      border-radius: 3px;
-    }
-    .tag-green { background:var(--accent-dim); color:var(--accent); border:1px solid rgba(34,211,165,0.18); }
-    .tag-amber { background:var(--amber-dim); color:var(--amber); border:1px solid rgba(245,158,11,0.18); }
-    .tag-blue  { background:var(--blue-dim);  color:var(--blue);  border:1px solid rgba(96,165,250,0.18); }
-
-    .card-name {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-desc {
-      font-size: 0.845rem;
-      color: var(--text-muted);
-      line-height: 1.68;
-      flex: 1;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-      position: relative;
-      z-index: 1;
-    }
-    .card-cta {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 11.5px;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: gap 0.2s;
-    }
-    .card:hover .card-cta { gap: 9px; }
-    .card-stack {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 10px;
-      color: var(--text-sub);
-    }
-
-    /* ── FOOTER ───────────────────────────────────── */
-    footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 36px 24px;
-      text-align: center;
-    }
-    .footer-inner {
-      font-family: 'Azeret Mono', monospace;
-      font-size: 11px;
-      color: var(--text-sub);
-      letter-spacing: 0.06em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-    .footer-inner a { color: var(--accent); text-decoration: none; }
-    .footer-inner a:hover { text-decoration: underline; }
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    /* ── ANIMATIONS ───────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── RESPONSIVE ───────────────────────────────── */
-    @media (max-width: 640px) {
-      .hero { padding: 64px 20px 52px; }
-      .grid { grid-template-columns: 1fr; padding: 0 20px; }
-      .section-head { padding: 0 20px; }
+    @media(max-width:640px){
+      .hero{padding:60px 20px 44px}
+      .grid,.filter-wrap{padding:0 20px}
+      .result-count{display:none}
     }
   </style>
 </head>
 <body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-  <!-- ambient glow -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+<main>
 
-  <main>
+<div class="hero">
+  <p class="eyebrow">doccaz / projects &amp; tools</p>
+  <h1>Open Source<br /><em>Projects</em></h1>
+  <p class="hero-sub">Tools, scripts and experiments for infrastructure engineers, security practitioners, embedded developers, and curious minds.</p>
+  <div class="hero-badges">
+    <span class="badge live"><span></span>5 web tools live</span>
+    <span class="badge">@SUSE</span>
+    <span class="badge">github.com/doccaz</span>
+  </div>
+</div>
 
-    <!-- ── HERO ── -->
-    <div class="hero">
-      <p class="hero-eyebrow">doccaz / open source tools</p>
-      <h1>Web Tools &amp;<br /><em>Experiments</em></h1>
-      <p class="hero-sub">
-        A collection of browser-based utilities for infrastructure engineers,
-        container security, and embedded hardware developers.
-        No install required — open and use.
-      </p>
-      <div class="hero-badges">
-        <span class="badge live"><span></span>5 tools live</span>
-        <span class="badge">@SUSE</span>
-        <span class="badge">github.com/doccaz</span>
-      </div>
+<div class="filter-wrap">
+  <div class="filter-bar">
+    <span class="filter-label">filter</span>
+    <button class="f-btn active" data-filter="all">All</button>
+    <button class="f-btn" data-filter="web">🌐 Web / Live</button>
+    <button class="f-btn" data-filter="suse">🦎 SUSE</button>
+    <button class="f-btn" data-filter="virtualization">🖥️ Virtualization</button>
+    <button class="f-btn" data-filter="kubernetes">☸️ Kubernetes</button>
+    <button class="f-btn" data-filter="security">🔒 Security</button>
+    <button class="f-btn" data-filter="ai-mcp">🤖 AI / MCP</button>
+    <button class="f-btn" data-filter="monitoring">📊 Monitoring</button>
+    <button class="f-btn" data-filter="linux">🐧 Linux</button>
+    <button class="f-btn" data-filter="fun">🎯 Fun</button>
+    <span class="result-count" id="count"></span>
+  </div>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- ══ LIVE WEB TOOLS ══ -->
+
+  <a class="card" href="https://doccaz.github.io/cloud-init" target="_blank" rel="noopener" data-tags="web,suse,kubernetes,virtualization">
+    <div class="card-header">
+      <div class="card-icon">☁️</div>
+      <div class="card-badges"><span class="type-pill type-web">live</span><span class="chip chip-green">suse</span><span class="chip chip-blue">kubernetes</span></div>
     </div>
+    <div class="card-name">Cloud-Init Generator</div>
+    <div class="card-desc">Visually compose and validate cloud-init configuration files. Real-time YAML output with schema validation — no YAML hand-editing required.</div>
+    <div class="card-footer"><span class="card-cta">Open tool →</span><span class="card-stack">TypeScript · Vite</span></div>
+  </a>
 
-    <!-- ── SECTION: Infrastructure & Security ── -->
-    <div class="section-head">
-      <span class="section-label">Infrastructure &amp; Security</span>
-      <div class="section-line"></div>
-      <span class="section-count">04</span>
+  <a class="card" href="https://doccaz.github.io/harvester-cloud-init" target="_blank" rel="noopener" data-tags="web,suse,kubernetes,virtualization">
+    <div class="card-header">
+      <div class="card-icon">🌾</div>
+      <div class="card-badges"><span class="type-pill type-web">live</span><span class="chip chip-green">suse</span><span class="chip chip-blue">kubernetes</span></div>
     </div>
+    <div class="card-name">Harvester CloudInit Editor</div>
+    <div class="card-desc">Visual editor for Harvester &amp; Elemental CloudInit CRDs. Live YAML preview with optional AI-assisted composition via Gemini API.</div>
+    <div class="card-footer"><span class="card-cta">Open tool →</span><span class="card-stack">TypeScript · Vite</span></div>
+  </a>
 
-    <div class="grid">
-
-      <a class="card" href="https://doccaz.github.io/cloud-init" target="_blank" rel="noopener noreferrer">
-        <div class="card-header">
-          <div class="card-icon">☁️</div>
-          <div class="card-tags">
-            <span class="tag tag-green">cloud-init</span>
-            <span class="tag tag-blue">TypeScript</span>
-          </div>
-        </div>
-        <div class="card-name">Cloud-Init Generator</div>
-        <div class="card-desc">
-          Visually compose and validate cloud-init configuration files.
-          Real-time YAML output, schema validation, and format checking
-          in a single browser tab.
-        </div>
-        <div class="card-footer">
-          <span class="card-cta">Open tool <span>→</span></span>
-          <span class="card-stack">React · Vite</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://doccaz.github.io/harvester-cloud-init" target="_blank" rel="noopener noreferrer">
-        <div class="card-header">
-          <div class="card-icon">🌾</div>
-          <div class="card-tags">
-            <span class="tag tag-green">harvester</span>
-            <span class="tag tag-blue">TypeScript</span>
-          </div>
-        </div>
-        <div class="card-name">Harvester CloudInit Editor</div>
-        <div class="card-desc">
-          Visual editor for Harvester &amp; Elemental CloudInit CRDs with
-          live YAML preview. Includes an AI-assisted composition mode
-          (requires a Gemini API key).
-        </div>
-        <div class="card-footer">
-          <span class="card-cta">Open tool <span>→</span></span>
-          <span class="card-stack">React · Vite</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://doccaz.github.io/harvester-configurator" target="_blank" rel="noopener noreferrer">
-        <div class="card-header">
-          <div class="card-icon">⚙️</div>
-          <div class="card-tags">
-            <span class="tag tag-green">harvester</span>
-            <span class="tag tag-blue">TypeScript</span>
-          </div>
-        </div>
-        <div class="card-name">Harvester Configurator</div>
-        <div class="card-desc">
-          Guided wizard for generating Harvester v1.7+ automated install
-          YAML configs. Covers bonding modes, VLANs, multipath, NTP,
-          SSH keys, and storage configuration.
-        </div>
-        <div class="card-footer">
-          <span class="card-cta">Open tool <span>→</span></span>
-          <span class="card-stack">React · Vite</span>
-        </div>
-      </a>
-
-      <a class="card" href="https://doccaz.github.io/neuvector-visualizer" target="_blank" rel="noopener noreferrer">
-        <div class="card-header">
-          <div class="card-icon">🛡️</div>
-          <div class="card-tags">
-            <span class="tag tag-amber">security</span>
-            <span class="tag tag-blue">HTML5</span>
-          </div>
-        </div>
-        <div class="card-name">NeuVector Visualizer</div>
-        <div class="card-desc">
-          Interactive educational animation demonstrating NeuVector's
-          Deep Packet Inspection and Zero Trust container security model.
-          Built for demos and training.
-        </div>
-        <div class="card-footer">
-          <span class="card-cta">Open tool <span>→</span></span>
-          <span class="card-stack">HTML · Canvas</span>
-        </div>
-      </a>
-
+  <a class="card" href="https://doccaz.github.io/harvester-configurator" target="_blank" rel="noopener" data-tags="web,suse,kubernetes,virtualization">
+    <div class="card-header">
+      <div class="card-icon">⚙️</div>
+      <div class="card-badges"><span class="type-pill type-web">live</span><span class="chip chip-green">suse</span><span class="chip chip-blue">kubernetes</span></div>
     </div>
+    <div class="card-name">Harvester Configurator</div>
+    <div class="card-desc">Guided wizard for Harvester v1.7+ automated install YAML. Covers bonding modes, VLANs, multipath, NTP, SSH keys and storage configuration with real-time YAML preview.</div>
+    <div class="card-footer"><span class="card-cta">Open tool →</span><span class="card-stack">TypeScript · Vite</span></div>
+  </a>
 
-    <!-- ── SECTION: Maker & Hobby ── -->
-    <div class="section-head">
-      <span class="section-label">Maker &amp; Hobby</span>
-      <div class="section-line"></div>
-      <span class="section-count">01</span>
+  <a class="card" href="https://doccaz.github.io/neuvector-visualizer" target="_blank" rel="noopener" data-tags="web,security,kubernetes,suse">
+    <div class="card-header">
+      <div class="card-icon">🛡️</div>
+      <div class="card-badges"><span class="type-pill type-web">live</span><span class="chip chip-rose">security</span><span class="chip chip-blue">kubernetes</span><span class="chip chip-green">suse</span></div>
     </div>
+    <div class="card-name">NeuVector Visualizer</div>
+    <div class="card-desc">Interactive HTML5 animation illustrating NeuVector's Deep Packet Inspection and Zero Trust container security model. Great for demos and training sessions.</div>
+    <div class="card-footer"><span class="card-cta">Open tool →</span><span class="card-stack">HTML5 · Canvas</span></div>
+  </a>
 
-    <div class="grid">
-
-      <a class="card" href="https://doccaz.github.io/pixel-matrix-studio" target="_blank" rel="noopener noreferrer">
-        <div class="card-header">
-          <div class="card-icon">🟦</div>
-          <div class="card-tags">
-            <span class="tag tag-amber">embedded</span>
-            <span class="tag tag-blue">TypeScript</span>
-          </div>
-        </div>
-        <div class="card-name">LCD Matrix Studio</div>
-        <div class="card-desc">
-          Professional bitmap editor for monochrome LCD/OLED displays —
-          SSD1306, SH1106, Nokia 5110 and more. Exports C-style
-          <code style="font-family:'Azeret Mono',monospace;font-size:0.8em;color:var(--accent)">PROGMEM</code>
-          arrays with native Vertical Page addressing. Supports two-way
-          code ↔ canvas editing.
-        </div>
-        <div class="card-footer">
-          <span class="card-cta">Open tool <span>→</span></span>
-          <span class="card-stack">React 19 · Vite</span>
-        </div>
-      </a>
-
+  <a class="card" href="https://doccaz.github.io/pixel-matrix-studio" target="_blank" rel="noopener" data-tags="web,fun,linux">
+    <div class="card-header">
+      <div class="card-icon">🟦</div>
+      <div class="card-badges"><span class="type-pill type-web">live</span><span class="chip chip-amber">embedded</span><span class="chip chip-green">fun</span></div>
     </div>
+    <div class="card-name">LCD Matrix Studio</div>
+    <div class="card-desc">Professional bitmap editor for monochrome LCD/OLED displays (SSD1306, SH1106, Nokia 5110). Exports C <code>PROGMEM</code> arrays with native Vertical Page addressing. Supports two-way code↔canvas editing.</div>
+    <div class="card-footer"><span class="card-cta">Open tool →</span><span class="card-stack">React 19 · Vite</span></div>
+  </a>
 
-  </main>
+  <!-- ══ SUSE TOOLS ══ -->
 
-  <!-- ── FOOTER ── -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-links">
-        <a href="https://github.com/doccaz" target="_blank" rel="noopener">github.com/doccaz</a>
-        <a href="https://www.linkedin.com/in/ericomm/" target="_blank" rel="noopener">linkedin</a>
-        <a href="https://ko-fi.com/doccaz" target="_blank" rel="noopener">ko-fi</a>
-      </div>
-      <span>Erico Mendonça · Solution Architect @ SUSE</span>
+  <a class="card" href="https://github.com/doccaz/scc-tools" target="_blank" rel="noopener" data-tags="suse,linux">
+    <div class="card-header">
+      <div class="card-icon">📦</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-green">suse</span><span class="chip chip-blue">linux</span></div>
     </div>
-  </footer>
+    <div class="card-name">scc-tools</div>
+    <div class="card-desc">CLI tools for SUSE Customer Center. The main utility <code>vercheck</code> searches for latest package versions, analyzes supportconfig archives, correlates product/module data, and tracks public cloud image status via PINT. ⭐ 17</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python</span></div>
+  </a>
 
+  <a class="card" href="https://github.com/doccaz/susemanager-api" target="_blank" rel="noopener" data-tags="suse,linux">
+    <div class="card-header">
+      <div class="card-icon">🔧</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-green">suse</span></div>
+    </div>
+    <div class="card-name">susemanager-api</div>
+    <div class="card-desc">Working script collection for the SUSE Manager / Uyuni XML-RPC API: list systems, apply Salt states, manage activation keys, run scripts on fleets, query CVE patch status, migrate service packs, and more.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python · Shell</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/scap2salt" target="_blank" rel="noopener" data-tags="suse,security,linux">
+    <div class="card-header">
+      <div class="card-icon">📋</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-rose">security</span><span class="chip chip-green">suse</span></div>
+    </div>
+    <div class="card-name">scap2salt</div>
+    <div class="card-desc">Converts SCAP (Security Content Automation Protocol) remediation content into SaltStack states, bridging OpenSCAP compliance scanning and automated remediation workflows.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/suse-cve-analyzer" target="_blank" rel="noopener" data-tags="suse,security,linux">
+    <div class="card-header">
+      <div class="card-icon">🔍</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-rose">security</span><span class="chip chip-green">suse</span></div>
+    </div>
+    <div class="card-name">suse-cve-analyzer</div>
+    <div class="card-desc">Correlates CVE data against installed packages on SUSE/openSUSE systems, helping quickly identify which systems are exposed to known vulnerabilities.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/gsplugin-customcategories" target="_blank" rel="noopener" data-tags="suse,linux">
+    <div class="card-header">
+      <div class="card-icon">🗂️</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-green">suse</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">gsplugin-customcategories</div>
+    <div class="card-desc">GNOME Software plugin that maps non-standard app categories (such as YaST's <code>X-YaST</code>) to visible categories in the GNOME Software store, improving discoverability of SUSE-specific tools.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">C · Autotools</span></div>
+  </a>
+
+  <!-- ══ VIRTUALIZATION ══ -->
+
+  <a class="card" href="https://github.com/doccaz/kvm-scripts" target="_blank" rel="noopener" data-tags="virtualization,linux">
+    <div class="card-header">
+      <div class="card-icon">🖥️</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-amber">virtualization</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">kvm-scripts</div>
+    <div class="card-desc">Network hook scripts for QEMU/KVM: dynamic port forwarding via iptables/firewalld, network restart automation, QEMU Guest Agent CLI for exec/info/file transfer, and websocket redirect management. ⭐ 115</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python · Shell</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/labvirtual" target="_blank" rel="noopener" data-tags="virtualization,linux">
+    <div class="card-header">
+      <div class="card-icon">🖱️</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-amber">virtualization</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">labvirtual</div>
+    <div class="card-desc">Flask-based web frontend for QEMU/KVM lab environments. Manages VMs via libvirt, supports LDAP auth, and auto-generates noVNC and SPICE browser console buttons with dynamic iptables rules.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python · Flask</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/vm-import-ui" target="_blank" rel="noopener" data-tags="virtualization,kubernetes">
+    <div class="card-header">
+      <div class="card-icon">📥</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-amber">virtualization</span><span class="chip chip-blue">kubernetes</span></div>
+    </div>
+    <div class="card-name">vm-import-ui</div>
+    <div class="card-desc">Container-based web UI for orchestrating VM imports into Harvester HCI. Provides a step-by-step guided workflow for migrating VMs from VMware, KVM, and other hypervisors.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Go · JavaScript</span></div>
+  </a>
+
+  <!-- ══ KUBERNETES / CONTAINERS ══ -->
+
+  <a class="card" href="https://github.com/doccaz/nfs-server-bci" target="_blank" rel="noopener" data-tags="kubernetes,suse">
+    <div class="card-header">
+      <div class="card-icon">📁</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-blue">kubernetes</span><span class="chip chip-green">suse</span></div>
+    </div>
+    <div class="card-name">nfs-server-bci</div>
+    <div class="card-desc">Containerized NFS server built on SUSE BCI (Base Container Image). Ready to deploy as a persistent storage provider in Kubernetes clusters and bare-metal lab environments.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Shell · Dockerfile</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/eks-demos" target="_blank" rel="noopener" data-tags="kubernetes">
+    <div class="card-header">
+      <div class="card-icon">☸️</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-blue">kubernetes</span><span class="chip chip-amber">aws</span></div>
+    </div>
+    <div class="card-name">eks-demos</div>
+    <div class="card-desc">Demo scripts, manifests and step-by-step walkthroughs for Amazon EKS — covering cluster setup, networking, IAM roles, and common workload deployment patterns.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Shell · YAML</span></div>
+  </a>
+
+  <!-- ══ MONITORING ══ -->
+
+  <a class="card" href="https://github.com/doccaz/nutanix-exporter" target="_blank" rel="noopener" data-tags="virtualization">
+    <div class="card-header">
+      <div class="card-icon">📤</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-amber">virtualization</span></div>
+    </div>
+    <div class="card-name">nutanix-exporter</div>
+    <div class="card-desc">Exports VMs from a Nutanix AHV cluster to portable QCOW2 images via the Prism API + CVM SSH. Generates ready-to-boot QEMU start scripts and Libvirt/KVM XML definitions. Includes self-healing SSH, NFS fallback, and "jukebox" zombie-disk recovery — plus a full walkthrough of the AHV Community Edition installation quirks.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python</span></div>
+  </a>
+
+  <!-- ══ AI / MCP ══ -->
+
+  <a class="card" href="https://github.com/doccaz/mcp-linux-diagnostics" target="_blank" rel="noopener" data-tags="ai-mcp,linux">
+    <div class="card-header">
+      <div class="card-icon">🤖</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-violet">ai/mcp</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">mcp-linux-diagnostics</div>
+    <div class="card-desc">A Model Context Protocol (MCP) server that exposes Linux diagnostic capabilities to AI assistants. Allows Claude and other MCP clients to run system checks, parse logs, and analyze supportconfig reports.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python · MCP</span></div>
+  </a>
+
+  <!-- ══ LINUX / DESKTOP ══ -->
+
+  <a class="card" href="https://github.com/doccaz/update-browser-certs" target="_blank" rel="noopener" data-tags="linux,security">
+    <div class="card-header">
+      <div class="card-icon">🔐</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-rose">security</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">update-browser-certs</div>
+    <div class="card-desc">Script to synchronize browser certificate stores on Linux, keeping CA bundles in Firefox and Chrome/Chromium aligned with the system's trusted certificate anchors.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Shell</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/keyring-setpass" target="_blank" rel="noopener" data-tags="linux">
+    <div class="card-header">
+      <div class="card-icon">🔑</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">keyring-setpass</div>
+    <div class="card-desc">Utility for setting and managing the GNOME keyring password non-interactively — useful for headless environments, provisioning scripts, and CI/CD pipelines where a GUI is unavailable.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python</span></div>
+  </a>
+
+  <!-- ══ FUN / HOBBY ══ -->
+
+  <a class="card" href="https://github.com/doccaz/knobcast" target="_blank" rel="noopener" data-tags="fun">
+    <div class="card-header">
+      <div class="card-icon">🎛️</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-amber">fun</span><span class="chip chip-amber">embedded</span></div>
+    </div>
+    <div class="card-name">KnobCast</div>
+    <div class="card-desc">PlatformIO/C++ firmware that turns an ESP32-C3 + KY-040 rotary encoder + 72×40 OLED into a physical Chromecast remote. Controls volume, play/pause, next/prev, mute, and switches between devices — passively attaching to whatever app is already running, no LAUNCH needed. Includes a web UI and captive-portal WiFi setup.</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">C++ · PlatformIO</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/urnas-br" target="_blank" rel="noopener" data-tags="fun">
+    <div class="card-header">
+      <div class="card-icon">🗳️</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-amber">fun</span></div>
+    </div>
+    <div class="card-name">urnas-br</div>
+    <div class="card-desc">Educational project for downloading and analyzing Brazilian electronic voting machine (urna eletrônica) data from the TSE public API — including ballot bulletins (BUs), vote logs, and QR code structure. ⭐ 15</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Python</span></div>
+  </a>
+
+  <a class="card" href="https://github.com/doccaz/linux-kb" target="_blank" rel="noopener" data-tags="linux">
+    <div class="card-header">
+      <div class="card-icon">📓</div>
+      <div class="card-badges"><span class="type-pill type-repo">repo</span><span class="chip chip-blue">linux</span></div>
+    </div>
+    <div class="card-name">linux-kb</div>
+    <div class="card-desc">A personal knowledge base of Linux scripts and recipes collected over the years, organized by topic: bash, kvm, btrfs, network, ldap, certificates, gnome, salt, SUMA, xorg, and more. No guarantees — just useful tips and tricks. ⭐ 5</div>
+    <div class="card-footer"><span class="card-cta repo">View on GitHub →</span><span class="card-stack">Shell · Python</span></div>
+  </a>
+
+</div><!-- /grid -->
+
+<div class="empty" id="empty"><p>// no projects match this filter</p></div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="https://github.com/doccaz" target="_blank" rel="noopener">github.com/doccaz</a>
+      <a href="https://www.linkedin.com/in/ericomm/" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://ko-fi.com/doccaz" target="_blank" rel="noopener">ko-fi</a>
+    </div>
+    <span>Erico Mendonça · Solution Architect @ SUSE</span>
+  </div>
+</footer>
+
+<script>
+  const btns  = document.querySelectorAll('.f-btn');
+  const cards = document.querySelectorAll('.card');
+  const count = document.getElementById('count');
+  const empty = document.getElementById('empty');
+
+  function updateCount(n) {
+    count.textContent = n + ' project' + (n !== 1 ? 's' : '');
+  }
+
+  function applyFilter(filter) {
+    let visible = 0;
+    cards.forEach(card => {
+      const tags = card.dataset.tags.split(',');
+      const show = filter === 'all' || tags.includes(filter);
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    empty.classList.toggle('show', visible === 0);
+    updateCount(visible);
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  updateCount(cards.length);
+</script>
 </body>
 </html>
