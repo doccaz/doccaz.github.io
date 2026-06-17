@@ -17,6 +17,8 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | Harvester Configurator | [doccaz.github.io/harvester-configurator](https://doccaz.github.io/harvester-configurator) | Guided wizard for Harvester v1.7+ automated install YAML |
 | NeuVector Visualizer | [doccaz.github.io/neuvector-visualizer](https://doccaz.github.io/neuvector-visualizer) | Interactive HTML5 demo of NeuVector DPI and Zero Trust container security |
 | LCD Matrix Studio | [doccaz.github.io/pixel-matrix-studio](https://doccaz.github.io/pixel-matrix-studio) | Bitmap editor for monochrome LCD/OLED displays; exports C PROGMEM arrays |
+| SUSE AI Sizing Architect | [doccaz.github.io/suse-ai-sizing-tool](https://doccaz.github.io/suse-ai-sizing-tool/) | Browser-based planning tool for estimating compute, memory, GPU and storage footprint of a SUSE AI deployment |
+| MeshPrep | [doccaz.github.io/meshprep](https://doccaz.github.io/meshprep/) | Browser-based OBJ/STL mesh editor and 3D print optimizer for FDM and SLA printing |
 
 ---
 
@@ -73,6 +75,7 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 |---|---|
 | [knobcast](https://github.com/doccaz/knobcast) | ESP32-C3 + rotary encoder + OLED physical remote for Chromecast, with web UI and captive portal setup |
 | [urnas-br](https://github.com/doccaz/urnas-br) | Downloads and analyzes Brazilian electronic voting machine data from the TSE public API |
+| [meshprep](https://github.com/doccaz/meshprep) | Browser-based OBJ/STL mesh editor and 3D print optimizer for FDM and SLA printing |
 
 ---
 
