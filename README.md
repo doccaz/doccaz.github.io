@@ -33,6 +33,7 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | [scap2salt](https://github.com/doccaz/scap2salt) | Converts SCAP remediation content into SaltStack states |
 | [suse-cve-analyzer](https://github.com/doccaz/suse-cve-analyzer) | Correlates CVE data against installed packages on SUSE/openSUSE systems |
 | [gsplugin-customcategories](https://github.com/doccaz/gsplugin-customcategories) | GNOME Software plugin that maps non-standard app categories (e.g. X-YaST) to visible store sections |
+| [iscsi-longhorn](https://github.com/doccaz/iscsi-longhorn) | Exposes Longhorn block volumes as iSCSI targets to external hosts via kernel LIO, running on Harvester/SLE Micro |
 
 ### Virtualization
 
@@ -74,7 +75,9 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | Repo | Description |
 |---|---|
 | [knobcast](https://github.com/doccaz/knobcast) | ESP32-C3 + rotary encoder + OLED physical remote for Chromecast, with web UI and captive portal setup |
+| [multi-jiggler](https://github.com/doccaz/multi-jiggler) | Waveshare RP2040-Zero mouse jiggler with creative movement profiles, LED feedback, and an interactive keyboard menu |
 | [urnas-br](https://github.com/doccaz/urnas-br) | Downloads and analyzes Brazilian electronic voting machine data from the TSE public API |
+| [mister-tty2oled-gc9a01](https://github.com/doccaz/mister-tty2oled-gc9a01) | ESP32-C3 + GC9A01 round-display reimplementation of MiSTer tty2oled, plus a WebSerial marquee editor |
 | [meshprep](https://github.com/doccaz/meshprep) | Browser-based OBJ/STL mesh editor and 3D print optimizer for FDM and SLA printing |
 
 ---
