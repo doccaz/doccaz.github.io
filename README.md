@@ -79,6 +79,7 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | [urnas-br](https://github.com/doccaz/urnas-br) | Downloads and analyzes Brazilian electronic voting machine data from the TSE public API |
 | [mister-tty2oled-gc9a01](https://github.com/doccaz/mister-tty2oled-gc9a01) | ESP32-C3 + GC9A01 round-display reimplementation of MiSTer tty2oled, plus a WebSerial marquee editor |
 | [meshprep](https://github.com/doccaz/meshprep) | Browser-based OBJ/STL mesh editor and 3D print optimizer for FDM and SLA printing |
+| [picopsu-thin-case](https://github.com/doccaz/picopsu-thin-case) | Fully parametric, 3D-printable thin mATX case for a PicoPSU-powered build, written in OpenSCAD |
 
 ---
 
