@@ -34,6 +34,7 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | [suse-cve-analyzer](https://github.com/doccaz/suse-cve-analyzer) | Correlates CVE data against installed packages on SUSE/openSUSE systems |
 | [gsplugin-customcategories](https://github.com/doccaz/gsplugin-customcategories) | GNOME Software plugin that maps non-standard app categories (e.g. X-YaST) to visible store sections |
 | [iscsi-longhorn](https://github.com/doccaz/iscsi-longhorn) | Exposes Longhorn block volumes as iSCSI targets to external hosts via kernel LIO, running on Harvester/SLE Micro |
+| [suse-observability-genai-dashboards](https://github.com/doccaz/suse-observability-genai-dashboards) | SUSE Observability dashboards for GenAI (Ollama/vLLM + OpenWebUI) cost/efficiency and GPU saturation |
 
 ### Virtualization
 
