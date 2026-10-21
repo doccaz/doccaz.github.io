@@ -19,7 +19,7 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | LCD Matrix Studio | [doccaz.github.io/pixel-matrix-studio](https://doccaz.github.io/pixel-matrix-studio) | Bitmap editor for monochrome LCD/OLED displays; exports C PROGMEM arrays |
 | SUSE AI Sizing Architect | [doccaz.github.io/suse-ai-sizing-tool](https://doccaz.github.io/suse-ai-sizing-tool/) | Browser-based planning tool for estimating compute, memory, GPU and storage footprint of a SUSE AI deployment |
 | MeshPrep | [doccaz.github.io/meshprep](https://doccaz.github.io/meshprep/) | Browser-based OBJ/STL mesh editor and 3D print optimizer for FDM and SLA printing |
-| MiSTer tty2oled web flasher | [doccaz.github.io/mister-tty2oled-gc9a01](https://doccaz.github.io/mister-tty2oled-gc9a01/) | Turn an ESP32-C3 + GC9A01 round display into a full-colour MiSTer marquee: flash it from the browser, plus a [marquee web app](https://doccaz.github.io/mister-tty2oled-gc9a01/app/) for the per-core artwork |
+| MiSTer tty2oled web flasher | [doccaz.github.io/mister-tty2oled-esp32](https://doccaz.github.io/mister-tty2oled-esp32/) | Turn an ESP32-C3 + GC9A01 round display into a full-colour MiSTer marquee: flash it from the browser, plus a [marquee web app](https://doccaz.github.io/mister-tty2oled-esp32/app/) for the per-core artwork |
 
 ---
 
@@ -79,7 +79,7 @@ Personal projects portal — a static GitHub Pages site listing all open source 
 | [knobcast](https://github.com/doccaz/knobcast) | ESP32-C3 + rotary encoder + OLED physical remote for Chromecast, with web UI and captive portal setup |
 | [multi-jiggler](https://github.com/doccaz/multi-jiggler) | Waveshare RP2040-Zero mouse jiggler with creative movement profiles, LED feedback, and an interactive keyboard menu |
 | [urnas-br](https://github.com/doccaz/urnas-br) | Downloads and analyzes Brazilian electronic voting machine data from the TSE public API |
-| [mister-tty2oled-gc9a01](https://github.com/doccaz/mister-tty2oled-gc9a01) | ESP32-C3 + GC9A01 round-display reimplementation of MiSTer tty2oled, with WiFi/mDNS/MQTT, a [web flasher](https://doccaz.github.io/mister-tty2oled-gc9a01/), a marquee editor and a MiSTer WiFi daemon |
+| [mister-tty2oled-esp32](https://github.com/doccaz/mister-tty2oled-esp32) | ESP32-C3 + GC9A01 round-display reimplementation of MiSTer tty2oled, with WiFi/mDNS/MQTT, a [web flasher](https://doccaz.github.io/mister-tty2oled-esp32/), a marquee editor and a MiSTer WiFi daemon |
 | [meshprep](https://github.com/doccaz/meshprep) | Browser-based OBJ/STL mesh editor and 3D print optimizer for FDM and SLA printing |
 | [picopsu-thin-case](https://github.com/doccaz/picopsu-thin-case) | Fully parametric, 3D-printable thin mATX case for a PicoPSU-powered build, written in OpenSCAD |
 
